@@ -1,13 +1,10 @@
-import { renderList, checkCurrentTab, getCookie, TodoItem } from './renderUtils.js';
-
-let _window = window as any;
 
 let todosFromLS = localStorage.getItem('todos'); //local storage
 let todos: TodoItem[] = todosFromLS ? JSON.parse(todosFromLS) : [];
 let n: number = todos.length;
 
 
-_window.addElement = (e: Event) => {  //adding new element
+const addElement = (e: Event) => {  //adding new element
     e.stopPropagation();
     let y = document.getElementById('inputText') as HTMLInputElement | null;
     if (y !== null) {
@@ -24,7 +21,7 @@ _window.addElement = (e: Event) => {  //adding new element
             return;
         }
     }
-    _window.onClickAll();
+    onClickAll();
     let z = document.getElementById('overlay');
     if (z !== null) {
         z.style.display = 'none';
@@ -38,7 +35,7 @@ _window.addElement = (e: Event) => {  //adding new element
 //     onClickAll();
 // }; //to display the list onload of a page. Since document.body.onload expects a function,either function name can be given or write the function directly.
 
-_window.onClickCompleted = () => { //displays completed lists
+const onClickCompleted = () => { //displays completed lists
     let completedText = todos.filter((element: any) => {
         return element.completed === true;
     })
@@ -48,7 +45,7 @@ _window.onClickCompleted = () => { //displays completed lists
     }
 }
 
-_window.onClickActive = () => { //displays open list
+const onClickActive = () => { //displays open list
     let activeText = todos.filter((element: any) => {
         return element.completed === false;
     })
@@ -58,7 +55,7 @@ _window.onClickActive = () => { //displays open list
     }
 }
 
-_window.onClickAll = () => { //shows all including completed and open items
+const onClickAll = () => { //shows all including completed and open items
     let x = document.getElementById('all');
     if (x !== null) {
         renderList(todos, x.id);
@@ -66,7 +63,7 @@ _window.onClickAll = () => { //shows all including completed and open items
 }
 
 
-_window.newElement = () => { // pop-up page when clicked on add button
+const newElement = () => { // pop-up page when clicked on add button
     let y = document.getElementById('overlay');
     if (y !== null) {
         y.style.display = 'flex';
@@ -88,11 +85,11 @@ window.onkeydown = escClose;
 window.onkeypress = function enter(event: KeyboardEvent) { // add the element when clicked on enter key
     let x = document.getElementById('inputText');
     if (x !== null && event.keyCode === 13) {
-        _window.addElement(event);
+        addElement(event);
     }
 }
 
-_window.onClickCheckbox = (checkID: number) => { //checkbox function
+const onClickCheckbox = (checkID: number) => { //checkbox function
     todos.filter((element) => {
         if (element.id === checkID) {
             element.completed = element.completed === true ? false : true;
@@ -102,7 +99,7 @@ _window.onClickCheckbox = (checkID: number) => { //checkbox function
     checkFunction();
 }
 
-_window.onClickDelete = (elementID: number) => { //deletion function
+const onClickDelete = (elementID: number) => { //deletion function
     let index = todos.findIndex((element) => {
         return element.id === elementID;
     })
@@ -111,19 +108,19 @@ _window.onClickDelete = (elementID: number) => { //deletion function
     checkFunction();
 }
 
-_window.checkCookie = () => {
+const checkCookie = () => {
     let pType = getCookie('Type');
     console.log(pType)
     let x = document.getElementById('todo-list');
     if (x !== null) {
         if (pType === 'completed') {
-            _window.onClickCompleted();
+            onClickCompleted();
         }
         else if (pType === 'active') {
-            _window.onClickActive();
+            onClickActive();
         }
         else {
-            _window.onClickAll();
+            onClickAll();
         }
     }
 }
@@ -131,12 +128,126 @@ _window.checkCookie = () => {
 const checkFunction = () => { //to check which function has to be called based on active tab (for onclick of delete and checkbox)
     let tabID = checkCurrentTab();
     if (tabID !== undefined && tabID === 'all') {
-        _window.onClickAll();
+        onClickAll();
     }
     else if (tabID !== undefined && tabID === 'active') {
-        _window.onClickActive();
+        onClickActive();
     }
     else {
-        _window.onClickCompleted();
+        onClickCompleted();
     }
 }
+
+interface TodoItem {
+    text: string,
+    completed: boolean,
+    id: number,
+}
+
+
+const renderList = (inputArr: TodoItem[], state: string) => {
+    let statusList = document.getElementsByClassName('tabs');
+    for (let i = 0; i < statusList.length; i++) {
+        if (statusList !== null) {
+            statusList[i].classList.remove('activeTab');
+        }
+    }
+    let activeTabID = document.getElementById(state);
+    let activeClassName = "activeTab";
+    if (activeTabID != null) {
+        let arr = activeTabID.className.split(" ");
+        if (arr.indexOf(activeClassName) == -1) {
+            activeTabID.className += " " + activeClassName; // make the current tab as active
+        }
+    }
+    let x = document.getElementById('todo-list');
+    if (x !== null) {
+        let todoText = inputArr.map((element) => {
+            return `<div class="todo-note ${
+                element.completed === true ? 'completed' : ''
+                }">
+                <div class="checkmark" onclick = "onClickCheckbox(${element.id})"></div>
+                <div class="note" onclick = "onClickCheckbox(${element.id})">${element.text}</div>
+                <div class="delete" onclick = "onClickDelete(${element.id})"><img src="./src/images/delete.svg"></div>
+                </div>
+                `
+        }).join('');
+        x.innerHTML = todoText; //generate list
+        if (todoText === '') {
+            if (state === 'all') {
+                x.innerHTML = `
+                <div id="backgroundPage">
+                <div class="text">
+                <h3>Hello!</h3>
+                <div>Add your todo by clicking the " + " button</div>
+                </div>
+                <div class="image"><img src="./src/images/add_backgrund.svg"></div>
+                </div>
+                `
+            }
+            else if (state === 'active') {
+                x.innerHTML = `
+            <div id="backgroundPage">
+            <div class="text">
+            <h4>You don't have any active todos !</h4>
+            </div>
+            <div class="image"><img src="./src/images/circle_background.svg"></div>
+            </div>
+            `
+            }
+            else {
+                x.innerHTML = `
+            <div id="backgroundPage">
+            <div class="text">
+            <h4>You don't have any completed todos !</h4>
+            </div>
+            <div class="image"><img src="./src/images/checked_background.svg"></div>
+            </div>
+            `
+            }
+        }
+    }
+    setCookie(state);
+}
+const setCookie = (pageType: string) => {
+    let d = new Date();
+    d.setHours(d.getHours() + 1); //cookie expiry for 1 hour
+    let expiryDate = "expires =" + d.toUTCString();
+    document.cookie = "Type =" + pageType + ";" + expiryDate + ";path=/";
+}
+const getCookie = (cookieName: string) => {
+    let name = cookieName + "=";
+    let ca = document.cookie.split(';');
+    for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return "";
+}
+
+const onClickOverlay = (e: Event) => {
+    e.stopPropagation();
+    let x = document.getElementById('overlay');
+    if (x !== null) {
+        x.style.display = 'none';
+    }
+}
+const onClickInput = (e: Event) => {
+    e.stopPropagation();
+}
+const checkCurrentTab = () => { // to check which tab is currently active (for onclick of delete and checkbox)
+    let statusList = document.getElementsByClassName('tabs');
+    let currentTabID = '';
+    for (let i = 0; i < statusList.length; i++) {
+        if (statusList !== null && statusList[i].classList.contains('activeTab')) {
+            currentTabID = statusList[i].id;
+            return currentTabID;
+        }
+    }
+}
+
