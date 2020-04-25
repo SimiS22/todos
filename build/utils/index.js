@@ -97,14 +97,14 @@ _window.checkCookie = function () {
     console.log(pType);
     var x = document.getElementById('todo-list');
     if (x !== null) {
-        if (pType === 'all') {
-            _window.onClickAll();
+        if (pType === 'completed') {
+            _window.onClickCompleted();
         }
         else if (pType === 'active') {
             _window.onClickActive();
         }
         else {
-            _window.onClickCompleted();
+            _window.onClickAll();
         }
     }
 };
