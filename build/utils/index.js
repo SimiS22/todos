@@ -75,7 +75,7 @@ window.onkeypress = function enter(event) {
         addElement(event);
     }
 };
-var onClickCheckbox = function (checkID) {
+_window.onClickCheckbox = function (checkID) {
     todos.filter(function (element) {
         if (element.id === checkID) {
             element.completed = element.completed === true ? false : true;

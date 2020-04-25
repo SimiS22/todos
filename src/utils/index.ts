@@ -92,7 +92,7 @@ window.onkeypress = function enter(event: KeyboardEvent) { // add the element wh
     }
 }
 
-const onClickCheckbox = (checkID: number) => { //checkbox function
+_window.onClickCheckbox = (checkID: number) => { //checkbox function
     todos.filter((element) => {
         if (element.id === checkID) {
             element.completed = element.completed === true ? false : true;

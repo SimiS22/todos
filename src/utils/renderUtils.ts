@@ -4,6 +4,8 @@ export interface TodoItem {
     id: number,
 }
 
+let _window = window as any;
+
 export const renderList = (inputArr: TodoItem[], state: string) => {
     let statusList = document.getElementsByClassName('tabs');
     for (let i = 0; i < statusList.length; i++) {
@@ -89,14 +91,14 @@ export const getCookie = (cookieName: string) => {
     return "";
 }
 
-export const onClickOverlay = (e: Event) => {
+_window.onClickOverlay = (e: Event) => {
     e.stopPropagation();
     let x = document.getElementById('overlay');
     if (x !== null) {
         x.style.display = 'none';
     }
 }
-export const onClickInput = (e: Event) => {
+_window.onClickInput = (e: Event) => {
     e.stopPropagation();
 }
 export const checkCurrentTab = () => { // to check which tab is currently active (for onclick of delete and checkbox)

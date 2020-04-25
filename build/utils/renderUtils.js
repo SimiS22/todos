@@ -1,3 +1,4 @@
+var _window = window;
 export var renderList = function (inputArr, state) {
     var statusList = document.getElementsByClassName('tabs');
     for (var i = 0; i < statusList.length; i++) {
@@ -53,14 +54,14 @@ export var getCookie = function (cookieName) {
     }
     return "";
 };
-export var onClickOverlay = function (e) {
+_window.onClickOverlay = function (e) {
     e.stopPropagation();
     var x = document.getElementById('overlay');
     if (x !== null) {
         x.style.display = 'none';
     }
 };
-export var onClickInput = function (e) {
+_window.onClickInput = function (e) {
     e.stopPropagation();
 };
 export var checkCurrentTab = function () {
