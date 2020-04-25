@@ -7,7 +7,7 @@ let todos: TodoItem[] = todosFromLS ? JSON.parse(todosFromLS) : [];
 let n: number = todos.length;
 
 
-const addElement = (e: Event) => {  //adding new element
+_window.addElement = (e: Event) => {  //adding new element
     e.stopPropagation();
     let y = document.getElementById('inputText') as HTMLInputElement | null;
     if (y !== null) {
@@ -88,7 +88,7 @@ window.onkeydown = escClose;
 window.onkeypress = function enter(event: KeyboardEvent) { // add the element when clicked on enter key
     let x = document.getElementById('inputText');
     if (x !== null && event.keyCode === 13) {
-        addElement(event);
+        _window.addElement(event);
     }
 }
 
