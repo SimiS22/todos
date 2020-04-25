@@ -95,6 +95,7 @@ html body {
     width: 100%;
     padding-bottom: 10px;
     padding-top: 10px;
+    padding-bottom: 100px;
 }
 .checkmark:hover{
     transform: scale(1.1,1.1);

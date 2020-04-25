@@ -5,15 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>to-do</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./src/style.css">
+    <script type="module" src="build/utils/index.js"></script>
 </head>
 
 <body onload="checkCookie()">
-    <script src="../../build/index.js"></script>
     <div id="overlay" onclick="onClickOverlay(event)">
         <div id="container">
             <input type="text" id="inputText" placeholder="What needs to be done?" onclick="onClickInput(event)">
-            <div id="done"><img src="./images/add_icon.svg" onclick="addElement(event)"></div>
+            <div id="done"><img src="./src/images/add_icon.svg" onclick="addElement(event)"></div>
         </div>
     </div>
     <div id="main-page">
@@ -25,9 +25,8 @@
             <div class="tabs" id="completed" onclick="onClickCompleted()">completed</div>
         </div>
 
-        <div class="addNew" onclick="newElement()"><img src="./images/addBtn.svg"></div>
+        <div class="addNew" onclick="newElement()"><img src="./src/images/addBtn.svg"></div>
     </div>
-
 </body>
 
 </html>

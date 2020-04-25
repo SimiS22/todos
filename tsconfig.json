@@ -1,24 +1,15 @@
 {
-    "include": [
-        "src/**/*"
-    ],
+    "compileOnSave": true,
     "compilerOptions": {
+        "module": "ES2020",
         "lib": [
-            "ESNext",
-            "ES7",
-            "dom"
+            "DOM",
+            "ESNext"
         ],
+        "noImplicitAny": false,
+        "removeComments": true,
+        "sourceMap": false,
+        "rootDir": "src",
         "outDir": "build",
-        "target": "ES5",
-        "strict": true,
-        "alwaysStrict": true,
-        "noImplicitAny": true,
-        "strictNullChecks": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,
-        "strictFunctionTypes": true,
-        "noImplicitThis": true,
-        "strictPropertyInitialization": true,
-        "skipLibCheck": true,
     }
 }
