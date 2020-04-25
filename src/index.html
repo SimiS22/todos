@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to-do</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body onload="checkCookie()">
+    <script src="../../build/index.js"></script>
+    <div id="overlay" onclick="onClickOverlay(event)">
+        <div id="container">
+            <input type="text" id="inputText" placeholder="What needs to be done?" onclick="onClickInput(event)">
+            <div id="done"><img src="./images/add_icon.svg" onclick="addElement(event)"></div>
+        </div>
+    </div>
+    <div id="main-page">
+        <div id="header">🗒 to-dumm! 🗒</div>
+        <div id="todo-list"></div>
+        <div id="status">
+            <div class="tabs" id="all" onclick="onClickAll()">all</div>
+            <div class="tabs" id="active" onclick="onClickActive()">active</div>
+            <div class="tabs" id="completed" onclick="onClickCompleted()">completed</div>
+        </div>
+
+        <div class="addNew" onclick="newElement()"><img src="./images/addBtn.svg"></div>
+    </div>
+
+</body>
+
+</html>
